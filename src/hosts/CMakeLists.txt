@@ -1,3 +1,5 @@
+add_definitions(-DGLUTHOST_USE_UNTZ)
+
 add_executable(gluthost
     GlutHost.cpp
     GlutHostMain.cpp

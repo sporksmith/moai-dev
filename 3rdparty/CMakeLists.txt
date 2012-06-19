@@ -5,3 +5,4 @@ add_subdirectory(box2d-2.2.1)
 add_subdirectory(contrib)
 add_subdirectory(tlsf-2.0)
 
+add_subdirectory(untz)

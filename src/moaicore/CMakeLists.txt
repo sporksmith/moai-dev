@@ -354,6 +354,26 @@ add_library(moaicore STATIC
     MOAILayoutFrame.cpp
     MOAIBox2DFixture.cpp
     MOAIVertexFormat.h
+    MOAIAnimCurveBase.cpp
+    MOAIAnimCurveBase.h
+    MOAIAnimCurveQuat.cpp
+    MOAIAnimCurveQuat.h
+    MOAIAnimCurveVec.cpp
+    MOAIAnimCurveVec.h
+    MOAIDataBufferStream.cpp
+    MOAIDataBufferStream.h
+    MOAIFileStream.cpp
+    MOAIFileStream.h
+    MOAIGridDeck2D.cpp
+    MOAIGridDeck2D.h
+    MOAIMemStream.cpp
+    MOAIMemStream.h
+    MOAIStreamReader.cpp
+    MOAIStreamReader.h
+    MOAIStreamWriter.cpp
+    MOAIStreamWriter.h
+    MOAIStream.cpp
+    MOAIStream.h
 )
 
 target_link_libraries(moaicore

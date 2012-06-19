@@ -17,7 +17,6 @@ add_library(uslscore STATIC
     STLIteration.h
     USInterpolate.h
     USQuadCoord.cpp
-    USStreamFormatter.h
     USDeviceTime_nacl.cpp
     USSyntaxNode.h
     USMatrix3x3.h
@@ -32,11 +31,9 @@ add_library(uslscore STATIC
     USUnique_win32.cpp
     USFactory.h
     USTrig.cpp
-    USCipherStream.h
     USByteStream.cpp
     USPolar.h
     USThread_win32.h
-    USCipher.cpp
     USTrig.h
     USLeanStack.h
     USPolyScanner.h
@@ -64,15 +61,11 @@ add_library(uslscore STATIC
     USFileSys.cpp
     USTypeID.h
     STLList.h
-    USInflater.cpp
     USMutex_posix.cpp
     USHexDump.h
     USThread_posix.cpp
     USRadixSort32.h
-    USCipherStream.cpp
-    USBase64Cipher.h
     USZip.h
-    USStreamFormatter.cpp
     USTaskThread.cpp
     USSyntaxNode.cpp
     STLArray.h
@@ -85,15 +78,11 @@ add_library(uslscore STATIC
     USMatrix4x4.h
     USThread.h
     USTaskThread.h
-    USDeflater.h
     USData.cpp
     USBox.cpp
     USDataIOTask.h
     USDeviceTime_win32.cpp
-    USInflater.h
-    USBase64Cipher.cpp
     STLString.cpp
-    USDeflater.cpp
     USDirectoryItr.h
     USLexStream.h
     USTypedPtr.h
@@ -143,8 +132,23 @@ add_library(uslscore STATIC
     USData.h
     USAffine3D.h
     USAdapterInfo_win32.cpp
-    USCipher.h
     USXmlReader.h
+    USBase64Encoder.cpp
+    USBase64Encoder.h
+    USBase64Reader.cpp
+    USBase64Reader.h
+    USBase64Writer.cpp
+    USBase64Writer.h
+    USDeflateReader.cpp
+    USDeflateReader.h
+    USDeflateWriter.cpp
+    USDeflateWriter.h
+    USQuaternion.cpp
+    USQuaternion.h
+    USStreamReader.cpp
+    USStreamReader.h
+    USStreamWriter.cpp
+    USStreamWriter.h
 )
 
 target_link_libraries(uslscore

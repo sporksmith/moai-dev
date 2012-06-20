@@ -4,6 +4,8 @@ find_package(Freetype REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
+find_package(JPEG REQUIRED)
+find_package(PNG REQUIRED)
 
 include_directories(
     ${MOAI_SOURCE_DIR}/3rdparty
@@ -22,6 +24,8 @@ include_directories(
     ${CURL_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
     ${GLUT_INCLUDE_DIRS}
+    ${JPEG_INCLUDE_DIRS}
+    ${PNG_INCLUDE_DIRS}
 )
 
 link_directories(

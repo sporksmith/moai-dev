@@ -380,8 +380,8 @@ target_link_libraries(moaicore
     Box2D
     chipmunk
     tinyxml
-    jpeg
-    png
+    ${JPEG_LIBRARIES}
+    ${PNG_LIBRARIES}
     ${CURL_LIBRARIES}
     ${FREETYPE_LIBRARIES}
 )

@@ -1,8 +1,15 @@
+find_package(ALSA REQUIRED)
+
 include_directories(
     include
     src
     src/native/linux
+    ../rtaudio-4.0.11
+    ../rtaudio-4.0.11/include
+    ${ALSA_INCLUDE_DIRS}
 )
+
+add_definitions(-D__LINUX_PULSE__ -D__LINUX_ALSA__ -D__LINUX_OSS__)
 
 add_library(untz STATIC
     include/Untz.h
@@ -38,9 +45,15 @@ add_library(untz STATIC
     src/UntzSound.cpp
     src/MemoryAudioSource.cpp
     src/BufferedAudioSource.cpp
+
+    ../rtaudio-4.0.11/RtAudio.cpp
+    ../rtaudio-4.0.11/RtAudio.h
+    ../rtaudio-4.0.11/RtError.h
+    ../rtaudio-4.0.11/include/soundcard.h
 )
 
 target_link_libraries(untz
-    rtaudio
+    ${ALSA_LIBRARIES}
+    pulse-simple
     vorbisfile
 )

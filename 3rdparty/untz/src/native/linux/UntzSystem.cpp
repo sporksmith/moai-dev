@@ -16,44 +16,13 @@
 using namespace UNTZ;
 
 
-int RtInOut( void* outputBuffer, void* inputBuffer, unsigned int framesPerBuffer, 
-			double streamTime, RtAudioStreamStatus status, void *userdata )
-{
-	if(!UNTZ::System::get()->getData()->isActive())
-	{
-		memset(outputBuffer, 0, sizeof(float) * framesPerBuffer * UNTZ::System::get()->getData()->getNumOutputChannels());
-		return 0;
-	}
-
-	if(status)
-		std::cout << "Stream underflow detected!" << std::endl;	
-	AudioMixer *mixer = (AudioMixer*)userdata;
-	mixer->process(0, NULL, UNTZ::System::get()->getData()->getNumOutputChannels(), (float*)outputBuffer, framesPerBuffer);
-	
-    // volume & clipping
-    // HBS
-    UInt32 samples = UNTZ::System::get()->getData()->getNumOutputChannels() * framesPerBuffer;
-	float volume = mixer->getVolume();
-    // TODO: doing an extra read/write here is painful...
-    float *outB = (float*)outputBuffer;
-    for(UInt32 k = 0; k < samples; ++k)
-    {
-        float val = *outB * volume;
-        val = val > 1.0 ? 1.0 : val;
-        val = val < -1.0 ? -1.0 : val;
-        *(outB)++ = val;
-    }
-
-	return 0;
-}
-
 /* The linux system data object
  *
  */
 class LinuxSystemData : public UNTZ::SystemData
 {
 public:
-	LinuxSystemData(int numFrames) : SystemData(), mNumFrames(numFrames), audioIO(RtAudio::LINUX_ALSA) {};
+	LinuxSystemData(int numFrames) : SystemData(), mNumFrames(numFrames) {};
 
 	// SystemData
 	virtual unsigned int getNumFrames()
@@ -68,7 +37,50 @@ public:
 	RtAudio audioIO;
 	UInt32 mNumFrames;
 	UInt32 mOptions;
+    std::vector< float > mOutputBuffer;
 };
+
+
+int RtInOut( void* outputBuffer, void* inputBuffer, unsigned int framesPerBuffer, 
+			double streamTime, RtAudioStreamStatus status, void *userdata )
+{
+    LinuxSystemData *sysData = (LinuxSystemData *)userdata;
+    UInt32 numOutputChannels = UNTZ::System::get()->getData()->getNumOutputChannels();
+    UInt32 samples = numOutputChannels * framesPerBuffer;
+
+	if(!UNTZ::System::get()->getData()->isActive())
+	{
+		memset(outputBuffer, 0, sizeof(float) * samples);
+		return 0;
+	}
+
+    if(sysData->mOutputBuffer.size() < samples)
+    {
+        sysData->mOutputBuffer.resize(samples);
+    }
+    float *mixerOutputBuffer = (float*)&sysData->mOutputBuffer[0];
+    
+	if(status)
+		std::cout << "Stream underflow detected!" << std::endl;	
+	AudioMixer *mixer = &sysData->mMixer;
+	mixer->process(0, NULL, numOutputChannels, mixerOutputBuffer, framesPerBuffer);
+	
+    // volume & clipping & interleaving
+	float volume = mixer->getVolume();
+    float *outB = (float*)outputBuffer;
+    for(UInt32 i=0; i<framesPerBuffer; i++)
+    {
+        for(UInt32 j=0; j<numOutputChannels; j++)
+        {
+			float val = volume * mixerOutputBuffer[j*framesPerBuffer+i];
+            val = val > 1.0 ? 1.0 : val;
+            val = val < -1.0 ? -1.0 : val;
+            *(outB)++ = val;
+        }
+    }    
+
+	return 0;
+}
 
 
 System* System::msInstance = 0;
@@ -83,10 +95,10 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 	outParams.nChannels = 2;
 	outParams.deviceId = lsd->audioIO.getDefaultOutputDevice();
 	RtAudio::StreamOptions streamOptions;
-	streamOptions.flags = 0 | RTAUDIO_MINIMIZE_LATENCY | RTAUDIO_NONINTERLEAVED;
+	streamOptions.flags = 0 | RTAUDIO_MINIMIZE_LATENCY;
 	try 
 	{
-		lsd->audioIO.openStream( &outParams, NULL, RTAUDIO_FLOAT32, sampleRate, &numFrames, &RtInOut, (void *)&mpData->mMixer, &streamOptions );
+		lsd->audioIO.openStream( &outParams, NULL, RTAUDIO_FLOAT32, sampleRate, &numFrames, &RtInOut, mpData, &streamOptions );
 		lsd->audioIO.startStream();
 	}
 	catch(RtError& error)

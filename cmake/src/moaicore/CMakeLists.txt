@@ -383,6 +383,7 @@ target_link_libraries(moaicore
     Box2D
     chipmunk
     tinyxml
+    uslscore
     ${JPEG_LIBRARIES}
     ${PNG_LIBRARIES}
     ${CURL_LIBRARIES}

@@ -375,6 +375,8 @@ add_library(moaicore STATIC
     "${local_source_dir}/MOAIStreamWriter.h"
     "${local_source_dir}/MOAIStream.cpp"
     "${local_source_dir}/MOAIStream.h"
+    "${local_source_dir}/MOAIHashWriter.cpp"
+    "${local_source_dir}/MOAIHashWriter.h"
 )
 
 target_link_libraries(moaicore

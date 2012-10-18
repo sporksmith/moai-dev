@@ -6,8 +6,7 @@
 #include <string.h>
 #include <aku/AKU.h>
 #include <lua-headers/moai_lua.h>
-#include <GlutHost.h>
-#include <string.h>
+#include "GlutHost.h"
 
 #define UNUSED(p) (( void )p)
 
@@ -39,7 +38,7 @@
 	#include <glut.h>
 	#include <FolderWatcher-win.h>
 #else
-	#include <GLUT/glut.h>
+	#include <GL/glut.h>
 #endif
 
 #ifdef __APPLE__

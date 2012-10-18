@@ -150,9 +150,35 @@ add_library(uslscore STATIC
     "${local_source_dir}/USStreamReader.h"
     "${local_source_dir}/USStreamWriter.cpp"
     "${local_source_dir}/USStreamWriter.h"
+    "${local_source_dir}/USHexReader.cpp"
+    "${local_source_dir}/USHexReader.h"
+    "${local_source_dir}/USHexWriter.cpp"
+    "${local_source_dir}/USHexWriter.h"
+    "${local_source_dir}/USHashWriterAdler32.cpp"
+    "${local_source_dir}/USHashWriterAdler32.h"
+    "${local_source_dir}/USHashWriter.cpp"
+    "${local_source_dir}/USHashWriterCRC32.cpp"
+    "${local_source_dir}/USHashWriterCRC32.h"
+    "${local_source_dir}/USHashWriter.h"
+    "${local_source_dir}/USHashWriterMD5.cpp"
+    "${local_source_dir}/USHashWriterMD5.h"
+    "${local_source_dir}/USHashWriterSHA1.cpp"
+    "${local_source_dir}/USHashWriterSHA1.h"
+    "${local_source_dir}/USHashWriterSHA224.cpp"
+    "${local_source_dir}/USHashWriterSHA224.h"
+    "${local_source_dir}/USHashWriterSHA256.cpp"
+    "${local_source_dir}/USHashWriterSHA256.h"
+    "${local_source_dir}/USHashWriterSHA384.cpp"
+    "${local_source_dir}/USHashWriterSHA384.h"
+    "${local_source_dir}/USHashWriterSHA512.cpp"
+    "${local_source_dir}/USHashWriterSHA512.h"
+    "${local_source_dir}/USHashWriterWhirlpool.cpp"
+    "${local_source_dir}/USHashWriterWhirlpool.h"
+
 )
 
 target_link_libraries(uslscore
+    whirlpool
     ${LUA_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )

@@ -4,3 +4,8 @@ add_library(utf8 STATIC
     "${local_source_dir}/utf8.c"
     "${local_source_dir}/utf8.h"
 )
+
+add_library(whirlpool STATIC
+    "${local_source_dir}/whirlpool.h"
+    "${local_source_dir}/whirlpool.c"
+)

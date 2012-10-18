@@ -178,6 +178,7 @@ add_library(uslscore STATIC
 )
 
 target_link_libraries(uslscore
+    whirlpool
     ${LUA_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
